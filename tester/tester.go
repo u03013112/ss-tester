@@ -14,7 +14,7 @@ type Srv struct{}
 
 // SSConfig : ss配置
 type SSConfig struct {
-	ID     int32
+	ID     uint
 	Domain string
 	IP     string
 	Port   string
@@ -70,27 +70,28 @@ func stopSSLocal() {
 	execShell("killall", args)
 }
 
-func testURL(URL string) *CurlResult {
+func testURL(URL string, timeout int64) *CurlResult {
 	ret := new(CurlResult)
 	ret.URL = URL
 	fmt.Printf("test >%s<\n", URL)
 	args := []string{
 		"-c",
-		fmt.Sprintf("curl --connect-timeout 5 -m 5 -I  \"%s\" --socks5 127.0.0.1:1080", URL),
+		fmt.Sprintf("curl --connect-timeout %d -m %d -I  \"%s\" --socks5 127.0.0.1:1080", timeout, timeout, URL),
 	}
-	fmt.Printf("%#v\n", args)
 	t1 := time.Now().UnixNano()
 	_, err := execShell("/bin/sh", args)
 	if err != nil {
 		fmt.Printf("curl error: %v\n", err)
-		return nil
+		ret.Code = 500
+		fmt.Printf("test >%s< failed\n", URL)
+	} else {
+		t2 := time.Now().UnixNano()
+		ret.Delay = t2 - t1
+		if err == nil {
+			ret.Code = 200
+		}
+		fmt.Printf("test >%s< ok,uesd %d nano\n", URL, t2-t1)
 	}
-	t2 := time.Now().UnixNano()
-	ret.Delay = t2 - t1
-	if err == nil {
-		ret.Code = 200
-	}
-	fmt.Printf("test >%s< ok,uesd %d nano\n", URL, t2-t1)
 	return ret
 }
 
@@ -117,19 +118,19 @@ func ssTest(sc *SSConfig, timeout int64, URLList []string) (*SSTestResult, error
 	}
 	// 先把之前的停掉
 	stopSSLocal()
-	time.Sleep(1)
+	time.Sleep(time.Second)
 	str, err := startSSLocal(sc)
 	if err == nil {
 		fmt.Println(str)
 	}
 	fmt.Printf("connect to >>%s<<\n", sc.IP)
 	// 2、等待一会，确保ss服务稳定
-	time.Sleep(3)
+	time.Sleep(time.Second * 3)
 	// 3、逐个url测试
 	ret := new(SSTestResult)
 	ret.ID = sc.ID
 	for _, URL := range URLList {
-		r := testURL(URL)
+		r := testURL(URL, timeout)
 		if r != nil {
 			ret.Result = append(ret.Result, *r)
 		}
@@ -148,7 +149,7 @@ func Test() {
 		"google.com",
 		"https://www.youtube.com",
 		"pornhub.com",
-		"https://www.facebook.com",
+		"www.tumblr.com",
 	}
 	ret, err := ssTest(&ssConfig, 5, URLList)
 	if err == nil {
