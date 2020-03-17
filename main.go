@@ -2,6 +2,8 @@ package main
 
 import (
 	// pb "github.com/u03013112/ss-pb/tester"
+	"time"
+
 	"github.com/u03013112/ss-tester/tester"
 )
 
@@ -23,5 +25,8 @@ func main() {
 	// if err := s.Serve(lis); err != nil {
 	// 	log.Fatalf("failed to serve: %v", err)
 	// }
-	tester.Test()
+	// tester.Test()
+	for {
+		time.Sleep(time.Second * 600)
+	}
 }

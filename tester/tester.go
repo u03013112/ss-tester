@@ -31,7 +31,7 @@ type CurlResult struct {
 
 // SSTestResult : ss检测结果
 type SSTestResult struct {
-	ID     int32
+	ID     uint
 	Result []CurlResult
 }
 
@@ -136,23 +136,4 @@ func ssTest(sc *SSConfig, timeout int64, URLList []string) (*SSTestResult, error
 		}
 	}
 	return ret, nil
-}
-
-func Test() {
-	ssConfig := SSConfig{
-		IP:     "107.182.186.33",
-		Port:   "58700",
-		Method: "aes-256-gcm",
-		Passwd: "VVV5hw9PYb",
-	}
-	URLList := []string{
-		"google.com",
-		"https://www.youtube.com",
-		"pornhub.com",
-		"www.tumblr.com",
-	}
-	ret, err := ssTest(&ssConfig, 5, URLList)
-	if err == nil {
-		fmt.Printf("%#v\n", ret)
-	}
 }

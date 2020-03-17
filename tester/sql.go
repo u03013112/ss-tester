@@ -7,7 +7,7 @@ import (
 // TestWebsite : 测试用网站，和测试次数，以及通过次数，用于发现有些url并不适合作为测试标准
 type TestWebsite struct {
 	sql.BaseModel
-	Url     string
+	URL     string
 	Count   int64
 	Success int64
 }
@@ -35,7 +35,7 @@ func getTestList() []string {
 	sql.GetInstance().Find(&webList)
 	ret := []string{}
 	for _, web := range webList {
-		ret = append(ret, web.Url)
+		ret = append(ret, web.URL)
 	}
 	return ret
 }
@@ -56,4 +56,10 @@ func getSSList() []SSConfig {
 		ret = append(ret, s)
 	}
 	return ret
+}
+
+// 更新指定ID配置中的IP和成功率
+func updateSSConfig(ID uint, IP string, rate int64) {
+	sql.GetInstance().Model(new(TestSSConfig)).Omit("id").Updates(map[string]interface{}{"id": ID, "ip": IP, "rate": rate})
+	return
 }
