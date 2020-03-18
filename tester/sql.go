@@ -1,6 +1,7 @@
 package tester
 
 import (
+	"github.com/u03013112/ss-tester/mod"
 	"github.com/u03013112/ss-tester/sql"
 )
 
@@ -12,22 +13,9 @@ type TestWebsite struct {
 	Success int64
 }
 
-// TestSSConfig :有待测试的ss配置,rate 是一个综合评价，暂时就定为成功率，目前延时不作为判断标准
-type TestSSConfig struct {
-	sql.BaseModel
-	Domain string `json:"domain,omitempty"`
-	IP     string `json:"ip,omitempty"`
-	Port   string `json:"port,omitempty"`
-	Passwd string `json:"passwd,omitempty"`
-	Method string `json:"method,omitempty"`
-	Source string `json:"source,omitempty"`
-	Backup string `json:"backup,omitempty"`
-	Rate   int64  `json:"rate,omitempty"`
-}
-
 // InitDB :
 func InitDB() {
-	sql.GetInstance().AutoMigrate(&TestSSConfig{}, &TestWebsite{})
+	sql.GetInstance().AutoMigrate(&mod.TestSSConfig{}, &TestWebsite{})
 }
 
 func getTestList() []string {
@@ -41,7 +29,7 @@ func getTestList() []string {
 }
 
 func getSSList() []SSConfig {
-	var ssList []TestSSConfig
+	var ssList []mod.TestSSConfig
 	sql.GetInstance().Find(&ssList)
 	ret := []SSConfig{}
 	for _, ss := range ssList {
@@ -60,6 +48,6 @@ func getSSList() []SSConfig {
 
 // 更新指定ID配置中的IP和成功率
 func updateSSConfig(ID uint, IP string, rate int64) {
-	sql.GetInstance().Model(new(TestSSConfig)).Omit("id").Updates(map[string]interface{}{"id": ID, "ip": IP, "rate": rate})
+	sql.GetInstance().Model(new(mod.TestSSConfig)).Where("id=?", ID).Select("ip", "rate").Updates(map[string]interface{}{"ip": IP, "rate": rate})
 	return
 }

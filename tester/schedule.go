@@ -10,7 +10,7 @@ func ScheduleInit() {
 	go func() {
 		for {
 			check()
-			time.Sleep(time.Second * 60 * 1)
+			time.Sleep(time.Second * 60 * 30 * 1)
 		}
 	}()
 	return
