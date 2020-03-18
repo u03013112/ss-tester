@@ -79,8 +79,9 @@ func testURL(URL string, timeout int64) *CurlResult {
 		fmt.Sprintf("curl --connect-timeout %d -m %d -I  \"%s\" --socks5 127.0.0.1:1080", timeout, timeout, URL),
 	}
 	t1 := time.Now().UnixNano()
-	_, err := execShell("/bin/sh", args)
+	str, err := execShell("/bin/sh", args)
 	if err != nil {
+		fmt.Printf("curl out: %s\n", str)
 		fmt.Printf("curl error: %v\n", err)
 		ret.Code = 500
 		fmt.Printf("test >%s< failed\n", URL)
@@ -131,9 +132,14 @@ func ssTest(sc *SSConfig, timeout int64, URLList []string) (*SSTestResult, error
 	ret.ID = sc.ID
 	for _, URL := range URLList {
 		r := testURL(URL, timeout)
-		if r != nil {
-			ret.Result = append(ret.Result, *r)
+		for i := 0; i < 2; i++ {
+			if r != nil && r.Code == 200 {
+				break
+			}
+			r = testURL(URL, timeout)
 		}
+		ret.Result = append(ret.Result, *r)
+
 	}
 	return ret, nil
 }

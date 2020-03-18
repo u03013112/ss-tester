@@ -47,8 +47,8 @@ func GetInstance() *gorm.DB {
 		// 这里应该用不上，直接在main开始位置初始化，这里应该走不到
 		InitDB()
 	}
-	return instance.Debug()
-	// return instance
+	// return instance.Debug()
+	return instance
 }
 
 // ListFilter : 列表通用过滤器
