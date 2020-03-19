@@ -20,9 +20,11 @@ func startShadowsocksRRShare() {
 				// fmt.Println(text)
 				configList := urlParse(text, "ShadowsocksRRShare")
 				mod.AddTestSSConfig(configList)
+				return
 			}
 		}
 	}
+	fmt.Println("startShadowsocksRRShare failed")
 	return
 }
 
