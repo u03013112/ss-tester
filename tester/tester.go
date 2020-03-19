@@ -2,11 +2,16 @@ package tester
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"net"
 	"os/exec"
 	"time"
+
+	pb "github.com/u03013112/ss-pb/tester"
+	"github.com/u03013112/ss-tester/mod"
+	"github.com/u03013112/ss-tester/sql"
 )
 
 // Srv ：服务
@@ -79,7 +84,7 @@ func testURL(URL string, timeout int64) *CurlResult {
 		fmt.Sprintf("curl --connect-timeout %d -m %d -I  \"%s\" --socks5 127.0.0.1:1080", timeout, timeout, URL),
 	}
 	t1 := time.Now().UnixNano()
-	str, err := execShell("/bin/sh", args)
+	_, err := execShell("/bin/sh", args)
 	if err != nil {
 		// fmt.Printf("curl out: %s\n", str)
 		// fmt.Printf("curl error: %v\n", err)
@@ -140,6 +145,49 @@ func ssTest(sc *SSConfig, timeout int64, URLList []string) (*SSTestResult, error
 		}
 		ret.Result = append(ret.Result, *r)
 
+	}
+	return ret, nil
+}
+
+// GetSSLineList :
+func (s *Srv) GetSSLineList(ctx context.Context, in *pb.GetSSLineListRequest) (*pb.GetSSLineListReply, error) {
+	ret := new(pb.GetSSLineListReply)
+	var ssList []mod.TestSSConfig
+	sql.GetInstance().Where("rate > ?", "0").Find(&ssList)
+	for _, ss := range ssList {
+		status := "-"
+		if ss.Rate >= 75 {
+			status = "nice"
+		} else if ss.Rate >= 50 {
+			status = "good"
+		} else {
+			status = "ok"
+		}
+		line := &pb.SSLine{
+			Id:          int64(ss.ID),
+			Name:        fmt.Sprintf("NL%d", ss.ID),
+			Description: ss.Backup,
+			Address:     ss.Source,
+			Status:      status,
+		}
+		ret.List = append(ret.List, line)
+	}
+	return ret, nil
+}
+
+// GetSSLineConfig :
+func (s *Srv) GetSSLineConfig(ctx context.Context, in *pb.GetSSLineConfigRequest) (*pb.GetSSLineConfigReply, error) {
+	var ss mod.TestSSConfig
+	db := sql.GetInstance().Where("id = ?", in.LineID).First(&ss)
+	if db.Error != nil {
+		fmt.Println("GetSSLineConfig failed")
+		return nil, db.Error
+	}
+	ret := &pb.GetSSLineConfigReply{
+		IP:     ss.IP,
+		Port:   ss.Port,
+		Method: ss.Method,
+		Passwd: ss.Passwd,
 	}
 	return ret, nil
 }
