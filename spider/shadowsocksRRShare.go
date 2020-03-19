@@ -1,6 +1,7 @@
 package spider
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -10,7 +11,7 @@ import (
 	"gopkg.in/xmlpath.v2"
 )
 
-func startShadowsocksRRShare() {
+func startShadowsocksRRShare() error {
 	herf1 := shadowsocksRRShareS1()
 	if herf1 != "" {
 		herf2 := shadowsocksRRShareS2(herf1)
@@ -20,12 +21,12 @@ func startShadowsocksRRShare() {
 				// fmt.Println(text)
 				configList := urlParse(text, "ShadowsocksRRShare")
 				mod.AddTestSSConfig(configList)
-				return
+				return nil
 			}
 		}
 	}
 	fmt.Println("startShadowsocksRRShare failed")
-	return
+	return errors.New("failed")
 }
 
 func shadowsocksRRShareS3(href string) string {

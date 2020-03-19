@@ -8,7 +8,12 @@ import (
 )
 
 func start() {
-	startShadowsocksRRShare()
+	// 添加重试
+	for i := 0; i < 10; i++ {
+		if err := startShadowsocksRRShare(); err == nil {
+			break
+		}
+	}
 }
 
 // 输入url，可以支持多个，用换行分割
