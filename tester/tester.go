@@ -81,8 +81,8 @@ func testURL(URL string, timeout int64) *CurlResult {
 	t1 := time.Now().UnixNano()
 	str, err := execShell("/bin/sh", args)
 	if err != nil {
-		fmt.Printf("curl out: %s\n", str)
-		fmt.Printf("curl error: %v\n", err)
+		// fmt.Printf("curl out: %s\n", str)
+		// fmt.Printf("curl error: %v\n", err)
 		ret.Code = 500
 		fmt.Printf("test >%s< failed\n", URL)
 	} else {
