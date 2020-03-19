@@ -166,9 +166,8 @@ func (s *Srv) GetSSLineList(ctx context.Context, in *pb.GetSSLineListRequest) (*
 		line := &pb.SSLine{
 			Id:          int64(ss.ID),
 			Name:        fmt.Sprintf("NL%d", ss.ID),
-			Description: ss.Backup,
-			Address:     ss.Source,
-			Status:      status,
+			Description: status,
+			Address:     ss.Backup,
 		}
 		ret.List = append(ret.List, line)
 	}
