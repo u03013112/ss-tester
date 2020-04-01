@@ -52,6 +52,10 @@ func urlParse(url string, source string) []mod.TestSSConfig {
 		config.Domain = list5[0]
 		config.Port = list5[1]
 
+		if config.Method == "rc4" {
+			continue
+		}
+
 		ret = append(ret, config)
 	}
 	return ret
