@@ -14,6 +14,11 @@ func start() {
 			break
 		}
 	}
+	for i := 0; i < 10; i++ {
+		if err := startMyIshadowxBiz(); err == nil {
+			break
+		}
+	}
 }
 
 // 输入url，可以支持多个，用换行分割
