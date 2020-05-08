@@ -23,7 +23,7 @@ func AddTestSSConfig(configList []TestSSConfig) {
 		if db.Error != nil {
 			sql.GetInstance().Create(&config)
 		} else {
-			sql.GetInstance().Model(&config).Updates(&config)
+			sql.GetInstance().Model(&config).Where("domain=?", config.Domain).Updates(&config)
 		}
 	}
 }
