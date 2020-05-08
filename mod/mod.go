@@ -23,7 +23,7 @@ func AddTestSSConfig(configList []TestSSConfig) {
 		if db.Error != nil {
 			sql.GetInstance().Create(&config)
 		} else {
-			continue
+			sql.GetInstance().Update(&config)
 		}
 	}
 }
