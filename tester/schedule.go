@@ -9,8 +9,9 @@ import (
 func ScheduleInit() {
 	go func() {
 		for {
+			time.Sleep(time.Second * 60 * 10 * 1)
 			check()
-			time.Sleep(time.Second * 60 * 30 * 1)
+			time.Sleep(time.Second * 60 * 20 * 1)
 		}
 	}()
 	return

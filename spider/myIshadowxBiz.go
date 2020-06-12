@@ -6,12 +6,26 @@ import (
 	"strings"
 
 	"github.com/u03013112/ss-tester/mod"
+	"golang.org/x/net/proxy"
 	"gopkg.in/xmlpath.v2"
 )
 
 func startMyIshadowxBiz() error {
 	url0 := "https://my.ishadowx.biz/"
-	resp, err := http.Get(url0)
+	stopSSLocal()
+	_, err := startSSLocal()
+	if err != nil {
+		return err
+	}
+	dialer, err := proxy.SOCKS5("tcp", "127.0.0.1:2080", nil, proxy.Direct)
+	if err != nil {
+		fmt.Println("can't connect to the proxy:", err)
+		return err
+	}
+	httpTransport := &http.Transport{}
+	httpClient := &http.Client{Transport: httpTransport}
+	httpTransport.Dial = dialer.Dial
+	resp, err := httpClient.Get(url0)
 	if err != nil {
 		fmt.Println(err)
 		return err
@@ -63,7 +77,6 @@ func startMyIshadowxBiz() error {
 		}
 		mod.AddTestSSConfig(configList)
 	}
-
 	return nil
 }
 

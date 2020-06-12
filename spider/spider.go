@@ -8,6 +8,7 @@ import (
 )
 
 func start() {
+	InitDB()
 	// 添加重试
 	for i := 0; i < 10; i++ {
 		if err := startShadowsocksRRShare(); err == nil {
@@ -57,7 +58,7 @@ func urlParse(url string, source string) []mod.TestSSConfig {
 		config.Domain = list5[0]
 		config.Port = list5[1]
 
-		if config.Method == "rc4" {
+		if strings.HasPrefix(config.Method, "rc4") {
 			continue
 		}
 

@@ -15,8 +15,10 @@ github.com/jinzhu/inflection
 # github.com/u03013112/ss-pb v1.0.34
 github.com/u03013112/ss-pb/tester
 # golang.org/x/net v0.0.0-20191126235420-ef20fe5d7933
+golang.org/x/net/proxy
 golang.org/x/net/context
 golang.org/x/net/trace
+golang.org/x/net/internal/socks
 golang.org/x/net/html
 golang.org/x/net/internal/timeseries
 golang.org/x/net/http2

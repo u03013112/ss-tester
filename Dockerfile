@@ -1,20 +1,3 @@
-FROM alpine:3.8
-# 基于alpine 3.8，高于此版本openssl会报错
-
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
-
-RUN	apk add --no-cache py2-pip privoxy libsodium\
-	&& pip install --no-cache-dir https://github.com/shadowsocks/shadowsocks/archive/master.zip -U
-
-RUN apk add curl
-
-RUN apk add --no-cache \ 
-    tzdata && \
-    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    echo Asia/Shanghai > /etc/timezone && \
-    apk del tzdata
-
-COPY --from=golang:1.11.2-alpine3.8 /usr/local/go/lib/time/zoneinfo.zip /usr/local/go/lib/time/zoneinfo.zip
+FROM u03013112/ss-tester-base
 COPY build/ss-tester /usr/local/bin/ss-tester
-
 CMD [ "/usr/local/bin/ss-tester" ]

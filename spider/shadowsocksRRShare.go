@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/u03013112/ss-tester/mod"
+	"golang.org/x/net/proxy"
 	"gopkg.in/xmlpath.v2"
 )
 
@@ -31,9 +32,22 @@ func startShadowsocksRRShare() error {
 
 func shadowsocksRRShareS3(href string) string {
 	url0 := "https://www.github.com" + href
-	resp, err := http.Get(url0)
+	stopSSLocal()
+	_, err := startSSLocal()
 	if err != nil {
-		fmt.Println(err)
+		return ""
+	}
+	dialer, err := proxy.SOCKS5("tcp", "127.0.0.1:2080", nil, proxy.Direct)
+	if err != nil {
+		fmt.Println("can't connect to the proxy:", err)
+		return ""
+	}
+	httpTransport := &http.Transport{}
+	httpClient := &http.Client{Transport: httpTransport}
+	httpTransport.Dial = dialer.Dial
+	resp, err := httpClient.Get(url0)
+	if err != nil {
+		fmt.Println("s3:", err)
 		return ""
 	}
 	defer resp.Body.Close()
@@ -48,7 +62,7 @@ func shadowsocksRRShareS2(href string) string {
 	url0 := "https://www.github.com" + href
 	resp, err := http.Get(url0)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("s2:", err)
 		return ""
 	}
 	defer resp.Body.Close()
@@ -70,7 +84,7 @@ func shadowsocksRRShareS1() string {
 	url0 := "https://github.com/ruanfei/ShadowsocksRRShare/tree/master/ss"
 	resp, err := http.Get(url0)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("s1:", err)
 		return ""
 	}
 	defer resp.Body.Close()
