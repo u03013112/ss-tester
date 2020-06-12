@@ -1,6 +1,9 @@
 package tester
 
 import (
+	"fmt"
+	"time"
+
 	"github.com/u03013112/ss-tester/mod"
 	"github.com/u03013112/ss-tester/sql"
 )
@@ -48,6 +51,17 @@ func getSSList() []SSConfig {
 
 // 更新指定ID配置中的IP和成功率
 func updateSSConfig(ID uint, IP string, rate int64) {
-	sql.GetInstance().Model(new(mod.TestSSConfig)).Where("id=?", ID).Select("ip", "rate").Updates(map[string]interface{}{"ip": IP, "rate": rate})
+	var ss mod.TestSSConfig
+	db := sql.GetInstance().Where("id = ?", ID).First(&ss)
+	if db.Error != nil {
+		fmt.Println(db.Error.Error())
+		return
+	}
+	uptime := int64(0)
+	if ss.Rate > 0 && rate > 0 {
+		dt := time.Now().Unix() - ss.UpdatedAt.Unix()
+		uptime = ss.Uptime + dt
+	}
+	sql.GetInstance().Model(new(mod.TestSSConfig)).Where("id=?", ID).Select("ip", "rate", "uptime").Updates(map[string]interface{}{"ip": IP, "rate": rate, "uptime": uptime})
 	return
 }

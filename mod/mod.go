@@ -13,6 +13,7 @@ type TestSSConfig struct {
 	Source string `json:"source,omitempty"`
 	Backup string `json:"backup,omitempty"`
 	Rate   int64  `json:"rate,omitempty"`
+	Uptime int64  `json:"uptime,omitempty"`
 }
 
 // AddTestSSConfig :添加需要测试的SS配置，目前是用Domain做唯一键
