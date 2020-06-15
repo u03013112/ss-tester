@@ -17,6 +17,7 @@ const (
 
 // for ci
 func main() {
+	spider.InitDB()
 	tester.InitDB()
 	tester.ScheduleInit()
 	spider.ScheduleInit()

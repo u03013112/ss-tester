@@ -8,6 +8,11 @@ var Spiding bool
 // Testing : 正在测
 var Testing bool
 
+func init() {
+	Spiding = false
+	Testing = false
+}
+
 // TestSSConfig :有待测试的ss配置,rate 是一个综合评价，暂时就定为成功率，目前延时不作为判断标准
 type TestSSConfig struct {
 	sql.BaseModel

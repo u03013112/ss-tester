@@ -11,7 +11,7 @@ import (
 func ScheduleInit() {
 	go func() {
 		for {
-			time.Sleep(time.Second * 60 * 10 * 1)
+			// time.Sleep(time.Second * 60 * 10 * 1)
 			for {
 				if mod.Spiding == false {
 					mod.Testing = true
@@ -22,7 +22,7 @@ func ScheduleInit() {
 					time.Sleep(time.Second * 1)
 				}
 			}
-			time.Sleep(time.Second * 60 * 20 * 1)
+			time.Sleep(time.Second * 60 * 10 * 3)
 		}
 	}()
 	return
