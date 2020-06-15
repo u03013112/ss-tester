@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net"
 	"os"
@@ -21,8 +22,10 @@ func main() {
 	spider.InitDB()
 	tester.InitDB()
 	if len(os.Args) > 1 && os.Args[1] == "spider" {
+		fmt.Println("spider")
 		spider.ScheduleInit()
 	} else {
+		fmt.Println("tester")
 		tester.ScheduleInit()
 	}
 
