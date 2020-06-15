@@ -20,7 +20,7 @@ const (
 func main() {
 	spider.InitDB()
 	tester.InitDB()
-	if len(os.Args) > 1 && os.Args[1] == "tester" {
+	if len(os.Args) > 1 && os.Args[1] == "spider" {
 		spider.ScheduleInit()
 	} else {
 		tester.ScheduleInit()
