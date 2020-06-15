@@ -23,13 +23,13 @@ func startSSLocal() (string, error) {
 		"-m", sc.Method,
 		"-d", "start",
 	}
-	return execShell("sslocal0", args)
+	return execShell("sslocal", args)
 }
 
 func stopSSLocal() {
 	args := []string{
 		"-9",
-		"sslocal0",
+		"sslocal",
 	}
 	execShell("killall", args)
 }

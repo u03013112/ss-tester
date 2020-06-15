@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net"
+	"os"
 
 	pb "github.com/u03013112/ss-pb/tester"
 	"google.golang.org/grpc"
@@ -19,8 +20,11 @@ const (
 func main() {
 	spider.InitDB()
 	tester.InitDB()
-	tester.ScheduleInit()
-	spider.ScheduleInit()
+	if len(os.Args) > 1 && os.Args[1] == "tester" {
+		spider.ScheduleInit()
+	} else {
+		tester.ScheduleInit()
+	}
 
 	lis, err := net.Listen("tcp", port)
 	if err != nil {

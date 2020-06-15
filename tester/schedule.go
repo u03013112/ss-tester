@@ -3,34 +3,17 @@ package tester
 import (
 	"fmt"
 	"time"
-
-	"github.com/u03013112/ss-tester/mod"
 )
 
 // ScheduleInit :
 func ScheduleInit() {
 	go func() {
 		for {
-			// time.Sleep(time.Second * 60 * 10 * 1)
-			for {
-				if mod.Spiding == false {
-					mod.Testing = true
-					check()
-					mod.Testing = false
-					break
-				} else {
-					time.Sleep(time.Second * 1)
-				}
-			}
+			check()
 			time.Sleep(time.Second * 60 * 10 * 3)
 		}
 	}()
 	return
-}
-
-// Check :
-func Check() {
-	check()
 }
 
 func check() {
