@@ -3,6 +3,8 @@ package tester
 import (
 	"fmt"
 	"time"
+
+	"github.com/u03013112/ss-tester/mod"
 )
 
 // ScheduleInit :
@@ -10,14 +12,29 @@ func ScheduleInit() {
 	go func() {
 		for {
 			time.Sleep(time.Second * 60 * 10 * 1)
-			check()
+			for {
+				if mod.Spiding == false {
+					mod.Testing = true
+					check()
+					mod.Testing = false
+					break
+				} else {
+					time.Sleep(time.Second * 1)
+				}
+			}
 			time.Sleep(time.Second * 60 * 20 * 1)
 		}
 	}()
 	return
 }
 
+// Check :
+func Check() {
+	check()
+}
+
 func check() {
+	fmt.Printf("check")
 	// 读取数据库中需要检测配置
 	scList := getSSList()
 	if len(scList) == 0 {

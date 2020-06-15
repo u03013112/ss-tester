@@ -2,6 +2,12 @@ package mod
 
 import "github.com/u03013112/ss-tester/sql"
 
+// Spiding : 正在爬
+var Spiding bool
+
+// Testing : 正在测
+var Testing bool
+
 // TestSSConfig :有待测试的ss配置,rate 是一个综合评价，暂时就定为成功率，目前延时不作为判断标准
 type TestSSConfig struct {
 	sql.BaseModel
