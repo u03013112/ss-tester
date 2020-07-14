@@ -5,8 +5,18 @@ option go_package = "github.com/u03013112/ss-pb/tester";
 import "google/api/annotations.proto";
 
 service SSTester {
-    rpc GetSSLineList(GetSSLineListRequest) returns (GetSSLineListReply) {}
-    rpc GetSSLineConfig(GetSSLineConfigRequest) returns (GetSSLineConfigReply) {}
+    rpc GetSSLineList(GetSSLineListRequest) returns (GetSSLineListReply) {
+        option (google.api.http) = {
+            post: "/v1/tester/getsslinelist"
+            body: "*"
+        };
+    }
+    rpc GetSSLineConfig(GetSSLineConfigRequest) returns (GetSSLineConfigReply) {
+        option (google.api.http) = {
+            post: "/v1/tester/getsslineconfig"
+            body: "*"
+        };
+    }
 }
 
 message GetSSLineListRequest {}

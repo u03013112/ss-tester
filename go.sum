@@ -214,6 +214,7 @@ github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0/go.mod h1:8NvIoxWQoOIhqOTXgf
 github.com/grpc-ecosystem/grpc-gateway v1.5.0/go.mod h1:RSKVYQBd5MCa4OVpNdGskqpgL2+G+NZTnrVHpWWfpdw=
 github.com/grpc-ecosystem/grpc-gateway v1.6.2/go.mod h1:RSKVYQBd5MCa4OVpNdGskqpgL2+G+NZTnrVHpWWfpdw=
 github.com/grpc-ecosystem/grpc-gateway v1.8.5/go.mod h1:vNeuVxBJEsws4ogUvrchl83t/GYV9WGTSLVdBhOQFDY=
+github.com/grpc-ecosystem/grpc-gateway v1.12.1 h1:zCy2xE9ablevUOrUZc3Dl72Dt+ya2FNAvC2yLYMHzi4=
 github.com/grpc-ecosystem/grpc-gateway v1.12.1/go.mod h1:8XEsbTttt/W+VvjtQhLACqCisSPWTxCZ7sBRjU6iH9c=
 github.com/hailocab/go-hostpool v0.0.0-20160125115350-e80d13ce29ed/go.mod h1:tMWxXQ9wFIaZeTI9F+hmhFiGpFmhOHzyShyFUhRm0H4=
 github.com/hashicorp/consul v1.4.0/go.mod h1:mFrjN1mfidgJfYP1xrJCF+AfRhr6Eaqhb2+sfyn/OOI=
@@ -533,6 +534,8 @@ github.com/u03013112/ss-pb v1.0.33 h1:xObEFVS71Iy8lsm/YFS5b5uinogg4F1GXHPYAAMswd
 github.com/u03013112/ss-pb v1.0.33/go.mod h1:G6V/9h3aMEpKsGOLX6hsTZznLC4n5Y4DNLv2yka1Pco=
 github.com/u03013112/ss-pb v1.0.34 h1:yDSScG8UpYdSS8E1Y3vZ/bqTDukjSwIeFJJfsWdzWDQ=
 github.com/u03013112/ss-pb v1.0.34/go.mod h1:G6V/9h3aMEpKsGOLX6hsTZznLC4n5Y4DNLv2yka1Pco=
+github.com/u03013112/ss-pb v1.0.39 h1:8YS6cwTioV75LNv1XCkH/+wyHF51fbshP6d7M5x8B+U=
+github.com/u03013112/ss-pb v1.0.39/go.mod h1:G6V/9h3aMEpKsGOLX6hsTZznLC4n5Y4DNLv2yka1Pco=
 github.com/ugorji/go v1.1.2/go.mod h1:hnLbHMwcvSihnDhEfx2/BzKp2xb0Y+ErdfYcrs9tkJQ=
 github.com/ugorji/go/codec v0.0.0-20190320090025-2dc34c0b8780/go.mod h1:iT03XoTwV7xq/+UGwKO3UbC1nNNlopQiY61beSdrtOA=
 github.com/vmware/govmomi v0.18.0/go.mod h1:URlwyTFZX72RmxtxuaFL2Uj3fD1JTvZdx59bHWk6aFU=
