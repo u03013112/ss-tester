@@ -33,6 +33,7 @@ func check() {
 		ret, err := ssTest(&sc, 5, urlList)
 		if err != nil {
 			fmt.Printf("check err:%v\n", err)
+			continue
 		}
 		// 简单做个处理，计算成功率
 		success := 0

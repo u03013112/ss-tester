@@ -24,19 +24,20 @@ func main() {
 	if len(os.Args) > 1 && os.Args[1] == "spider" {
 		fmt.Println("spider")
 		spider.ScheduleInit()
+		select {}
 	} else {
 		fmt.Println("tester")
 		tester.ScheduleInit()
-	}
 
-	lis, err := net.Listen("tcp", port)
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
-	}
-	log.Printf("listen %s", port)
-	s := grpc.NewServer()
-	pb.RegisterSSTesterServer(s, &tester.Srv{})
-	if err := s.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		lis, err := net.Listen("tcp", port)
+		if err != nil {
+			log.Fatalf("failed to listen: %v", err)
+		}
+		log.Printf("listen %s", port)
+		s := grpc.NewServer()
+		pb.RegisterSSTesterServer(s, &tester.Srv{})
+		if err := s.Serve(lis); err != nil {
+			log.Fatalf("failed to serve: %v", err)
+		}
 	}
 }
